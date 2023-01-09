@@ -9,7 +9,10 @@ target=$(ls ~/.config/tmuxinator | sed -E 's/\..*$//' | sed -E "s/$current_sessi
 
 [[ "$target" == "[cancel]" || -z "$target" ]] && exit
 if [[ -n $(echo "$target" | grep -o "copy-mode") && -z $(echo "$target" | grep -o "prefix") ]]; then
+    target=$(echo "$target" | sed -E 's/^\*//')
     echo "$target" | xargs tmuxinator start
 else
+    target=$(echo "$target" | sed -e 's/^\*//')
     echo "$target" | xargs tmuxinator start
 fi
+
